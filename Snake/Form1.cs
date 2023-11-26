@@ -39,18 +39,10 @@ namespace Snake
 
             // Place and add the button
             startButton = new Button();
-            startButton.Location = new Point(215, 5);
+            startButton.Location = new Point(viewSize / 2, 5);
             startButton.Size = new Size(70, 20);
             startButton.Text = "Start";
             startButton.Click += StartClick;
-            this.Controls.Add(startButton);
-            
-            // Place and add the button
-            restartButton = new Button(); 
-            restartButton.Location = new Point(240, 5);
-            restartButton.Size = new Size(70, 20);
-            restartButton.Text = "Restart";
-            restartButton.MouseClick += RestartHandler;
             this.Controls.Add(startButton);
 
             // Place and add the name label
@@ -164,11 +156,6 @@ namespace Snake
             // Prevent other key handlers from running
             //e.SuppressKeyPress = true;
             e.Handled = true;
-        }
-
-        private void RestartHandler(object sender, MouseEventArgs e)
-        {
-
         }
     }
 }

@@ -184,12 +184,5 @@ namespace Snake
         {
             addSegment = true;
         }
-
-        public void Restart()
-        {
-
-        }
-
-
     }
 }

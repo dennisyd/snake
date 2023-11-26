@@ -7,13 +7,11 @@ namespace Snake
     public class SnakePlayer
     {
         private LinkedList<Segment> segments;
-        private int segCount;
         public int direction { get; set; }
 
         public SnakePlayer()
         {
             direction = 0;
-            segCount = 0;
             segments = new LinkedList<Segment>();
 
             AddSegment(50, 50);
@@ -25,8 +23,6 @@ namespace Snake
         /// <param name="direction">Which direction this segment is moving</param>
         public void AddSegment(int x, int y)
         {
-            segCount++;
-
             if(segments.Count > 0)
                 segments.AddFirst(new Segment(x, y, segments.First.Value));
             else
@@ -43,10 +39,15 @@ namespace Snake
             return segments.First.Value;
         }
 
+
         public Segment GetFirstSegment()
         {
             return segments.Last.Value;
         }
+
+        /// <summary>
+        /// Represents a square segment of the snake. 
+        /// </summary>
         public class Segment
         {
             public int x
@@ -64,10 +65,12 @@ namespace Snake
             }
         }
 
+        /// <summary>
+        /// Reset snake to initial values. Used when restarting game. 
+        /// </summary>
         public void KillSnake()
         {
             direction = 0;
-            segCount = 0;
             segments = new LinkedList<Segment>();
 
             AddSegment(50, 50);
