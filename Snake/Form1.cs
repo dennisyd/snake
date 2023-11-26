@@ -13,19 +13,15 @@ namespace Snake
     public partial class Form1 : Form
     {
         private SnakeController controller;
-
-        // World is a simple container for Players and Powerups
-        // The controller owns the world, but we have a reference to it
         private SnakePlayer player;
         private SnakeFood food;
 
-        // This simple form only has two components
-        SnakePanel drawingPanel;
-        Button startButton;
-        Button restartButton;
-        Label nameLabel;
-        TextBox nameText;
-        Label gameOver;
+        private SnakePanel drawingPanel;
+        private Button startButton;
+        private Button restartButton;
+        private Label nameLabel;
+        private TextBox nameText;
+        private Label gameOver;
 
         private const int viewSize = 500;
         private const int menuSize = 40;
@@ -71,21 +67,27 @@ namespace Snake
             nameText.Size = new Size(70, 15);
             this.Controls.Add(nameText);
 
-            // Game over label
-            gameOver = new Label();
-            gameOver.Text = "Game Over.";
-            gameOver.Location = new Point(viewSize / 2, 10);
-            gameOver.Size = new Size(40, 15);
-            this.Controls.Add(gameOver);
-            gameOver.Visible = false;
-            controller.EndGame += GameOver;
-
             // Place and add the drawing panel
             drawingPanel = new SnakePanel(player, food);
             drawingPanel.Location = new Point(0, menuSize);
             drawingPanel.Size = new Size(viewSize, viewSize);
             this.Controls.Add(drawingPanel);
 
+            // Game over label
+            gameOver = new Label
+            {
+                Text = "Game Over.",
+                Font = new Font("Arial", 11F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0))),
+                BackColor = Color.Red,
+                Location = new Point(viewSize / 2, viewSize / 2),
+                Size = new Size(50, 50)
+            };
+
+            this.Controls.Add(gameOver);
+            gameOver.Visible = false;
+            controller.EndGame += GameOver;
+            gameOver.BringToFront();
+            
             // Set up key and mouse handlers
             this.KeyDown += HandleKeyDown;
         }
@@ -98,11 +100,11 @@ namespace Snake
         private void StartClick(object sender, EventArgs e)
         {
             // Disable the form controls
-            startButton.Enabled = false;
             nameText.Enabled = false;
             // Enable the global form to capture key presses
             KeyPreview = true;
-            // "connect" to the "server"
+
+            gameOver.Visible = false;
             controller.ProcessUpdates();
         }
 
@@ -125,8 +127,7 @@ namespace Snake
             MethodInvoker m = new MethodInvoker(() =>
             { 
             gameOver.Visible = true;
-            drawingPanel.Visible = false;
-            startButton.Enabled = true;
+            startButton.Text = "Restart";
             });
             this.Invoke(m);
         }

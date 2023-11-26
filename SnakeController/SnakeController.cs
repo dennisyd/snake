@@ -14,6 +14,7 @@ namespace Snake
         private bool RightPressed = false;
         private bool addSegment = false;
         private int screenSize;
+        private Timer gameTimer;
 
         public delegate void UpdateHandler();
         public delegate void EndGameHandler();
@@ -26,6 +27,10 @@ namespace Snake
             screenSize = 500;
             food = new SnakeFood(100, 100);
             player = new SnakePlayer();
+            
+            gameTimer = new Timer();
+            gameTimer.Interval = 50;
+            gameTimer.Elapsed += UpdateCameFromServer;
         }
 
         public SnakePlayer GetSnake()
@@ -40,12 +45,8 @@ namespace Snake
 
         public void ProcessUpdates()
         {
-            if (player.GetSegmentList().Count > 1)
-                player = new SnakePlayer();
+            player.KillSnake();
 
-            Timer gameTimer = new Timer();
-            gameTimer.Interval = 50;
-            gameTimer.Elapsed += UpdateCameFromServer;
             gameTimer.Start();
         }
 
@@ -92,7 +93,12 @@ namespace Snake
                 else
                 {
                     if (player.GetFirstSegment().x == seg.x && player.GetFirstSegment().y == seg.y)
+                    {
+                        gameTimer.Stop();
                         EndGame();
+                        break;
+                    }
+
 
                     seg.x = seg.nextSeg.x;
                     seg.y = seg.nextSeg.y;

@@ -63,5 +63,14 @@ namespace Snake
                 nextSeg = seg;
             }
         }
+
+        public void KillSnake()
+        {
+            direction = 0;
+            segCount = 0;
+            segments = new LinkedList<Segment>();
+
+            AddSegment(50, 50);
+        }
     }
 }
