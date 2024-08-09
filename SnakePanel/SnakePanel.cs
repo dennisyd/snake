@@ -98,7 +98,7 @@ namespace Snake
             // Center the view on the middle of the world,
             // since the image and world use different coordinate systems
             int viewSize = Size.Width; // view is square, so we can just use width
-            e.Graphics.TranslateTransform(viewSize / 2, viewSize / 2);
+            e.Graphics.TranslateTransform(viewSize / 2, Size.Height / 2);
 
             // Draw the player
             lock (player)
@@ -111,7 +111,6 @@ namespace Snake
             }
 
             DrawObjectWithTransform(e, food, food.x, food.y, 0, FoodDrawer);
-
 
             // Do anything that Panel (from which we inherit) needs to do
             base.OnPaint(e);

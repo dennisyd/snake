@@ -24,6 +24,8 @@ namespace Snake
         private Label gameOver;
 
         private const int viewSize = 500;
+        private int width = Screen.PrimaryScreen.Bounds.Width;
+        private int height = Screen.PrimaryScreen.Bounds.Height;
         private const int menuSize = 40;
 
         public Form1(SnakeController ctl)
@@ -35,11 +37,11 @@ namespace Snake
             controller.UpdateArrived += OnFrame;
 
             // Set the window size
-            ClientSize = new Size(viewSize, viewSize + menuSize);
+            ClientSize = new Size(width, height);
 
             // Place and add the button
             startButton = new Button();
-            startButton.Location = new Point(viewSize / 2, 5);
+            startButton.Location = new Point(width / 2, 5);
             startButton.Size = new Size(70, 20);
             startButton.Text = "Start";
             startButton.Click += StartClick;
@@ -62,7 +64,7 @@ namespace Snake
             // Place and add the drawing panel
             drawingPanel = new SnakePanel(player, food);
             drawingPanel.Location = new Point(0, menuSize);
-            drawingPanel.Size = new Size(viewSize, viewSize);
+            drawingPanel.Size = new Size(width, height - menuSize);
             this.Controls.Add(drawingPanel);
 
             // Game over label
@@ -71,7 +73,7 @@ namespace Snake
                 Text = "Game Over.",
                 Font = new Font("Arial", 11F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0))),
                 BackColor = Color.Red,
-                Location = new Point(viewSize / 2, viewSize / 2),
+                Location = new Point(width / 2, height / 2),
                 Size = new Size(50, 50)
             };
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Timers;
+using System.Windows.Forms;
+using Timer = System.Timers.Timer;
 
 namespace Snake
 {
@@ -14,7 +16,9 @@ namespace Snake
         private bool RightPressed = false;
         private bool addSegment = false;
         private int screenSize;
-        private Timer gameTimer;
+        private int width;
+        private int height;
+        private System.Timers.Timer gameTimer;
 
         public delegate void UpdateHandler();
         public delegate void EndGameHandler();
@@ -24,10 +28,11 @@ namespace Snake
 
         public SnakeController()
         {
+            width = Screen.PrimaryScreen.Bounds.Width;
+            height = Screen.PrimaryScreen.Bounds.Height;
             screenSize = 500;
             food = new SnakeFood(100, 100);
             player = new SnakePlayer();
-            
             gameTimer = new Timer();
             gameTimer.Interval = 50;
             gameTimer.Elapsed += UpdateCameFromServer;
@@ -62,29 +67,29 @@ namespace Snake
                     switch (player.direction)
                     {
                         case 0:
-                            if (seg.x > screenSize / 2)
-                                seg.x = ((screenSize / 2) * -1);
+                            if (seg.x > width / 2)
+                                seg.x = ((width / 2) * -1);
                             else
                                 seg.x += 10;
                             break;
 
                         case 90:
-                            if (seg.y < (screenSize / 2) * -1)
-                                seg.y = screenSize / 2;
+                            if (seg.y < (height / 2) * -1)
+                                seg.y = height / 2;
                             else
                                 seg.y -= 10;
                             break;
 
                         case 180:
-                            if (seg.x < (screenSize / 2) * -1)
-                                seg.x = screenSize / 2;
+                            if (seg.x < (width / 2) * -1)
+                                seg.x = width / 2;
                             else
                                 seg.x -= 10;
                             break;
 
                         case 270:
-                            if (seg.y > screenSize / 2)
-                                seg.y = (screenSize / 2) * -1;
+                            if (seg.y > height / 2)
+                                seg.y = (height / 2) * -1;
                             else
                                 seg.y += 10;
                             break;
@@ -111,8 +116,8 @@ namespace Snake
                 Random rand = new Random();
                 player.AddSegment(lastSegX, lastSegY);
 
-                int newX = rand.Next((screenSize / 2) * -1, screenSize / 2);
-                int newY = rand.Next((screenSize / 2) * -1, screenSize / 2);
+                int newX = rand.Next((width / 2) * -1, width / 2);
+                int newY = rand.Next((height / 2) * -1, height / 2);
                 newX = newX - (newX % 10);
                 newY = newY - (newY % 10);
 
